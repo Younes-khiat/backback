@@ -1,0 +1,19 @@
+const Terrains = require('../models/Terrains');
+
+const getTerrainsByUserId = async (req, res) => {
+    try {
+        const userId = req.query._id;
+        if (!userId) {
+            return res.status(400).json({ message: 'Missing user ID' });
+        }
+        const terrains = await Terrains.find({ userId });
+        res.status(200).json(terrains);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error retrieving terrains' });
+    }
+};
+
+module.exports = {
+    getTerrainsByUserId,
+};
